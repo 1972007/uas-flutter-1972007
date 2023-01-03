@@ -9,7 +9,7 @@ abstract class BottomNavMainState extends Equatable{
 
 class CurrentIdxChanged extends BottomNavMainState{
   final int currentIdx;
-  CurrentIdxChanged({required this.currentIdx});
+  const CurrentIdxChanged({required this.currentIdx});
 
   @override
   String toString()  => "CurrentIndexChanged to $currentIdx";

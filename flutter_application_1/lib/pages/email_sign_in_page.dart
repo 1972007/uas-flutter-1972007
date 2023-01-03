@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EmailSignInPage extends StatelessWidget{
   const EmailSignInPage({super.key});
@@ -10,7 +11,8 @@ class EmailSignInPage extends StatelessWidget{
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     emailController.text = FirebaseAuth.instance.currentUser?.email ?? "";
-
+    TextStyle poppinStyle = GoogleFonts.poppins(  color: const Color.fromARGB(255, 255, 255, 255));
+    TextStyle poppinStyleBold = GoogleFonts.poppins(fontWeight: FontWeight.bold,  color: const Color.fromARGB(255, 255, 255, 255));
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 4, 28, 69),
       body: Center(
@@ -18,12 +20,13 @@ class EmailSignInPage extends StatelessWidget{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //* TITLE
-            const Text("SIGN IN WITH EMAIL", style:TextStyle(color: Colors.white),),
+            Text("SIGN IN WITH EMAIL", style:poppinStyleBold,),
             const SizedBox(height: 10),
             StreamBuilder<User?>(
               stream: FirebaseAuth.instance.userChanges(),
               builder: ((context, snapshot) =>
-                snapshot.hasData ? Text("Welcome back, ${snapshot.data?.email}", style: const TextStyle(color: Colors.white),) : const Text("Welcome",style: TextStyle(color: Colors.white),)
+                snapshot.hasData ? Text("Welcome back, ${snapshot.data?.email}",
+                style: poppinStyle,) : Text("Welcome",style: poppinStyle,)
               ),
             ),
             const SizedBox(height: 10),
@@ -84,7 +87,7 @@ class EmailSignInPage extends StatelessWidget{
                     child:StreamBuilder<User?>(
                       stream: FirebaseAuth.instance.userChanges(),
                       builder: ((context, snapshot) =>
-                        snapshot.hasData ? const Text("Sign Out") : const Text("Sign Up")
+                         Text(snapshot.hasData ? "Sign Out" : "Sign Up",style: poppinStyleBold,) 
                       ),
                     ),
                   ),
@@ -98,8 +101,10 @@ class EmailSignInPage extends StatelessWidget{
                     onPressed: () async { 
                       try{
                         if(FirebaseAuth.instance.currentUser==null){
-                          await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-                          context.goNamed("main");
+                          FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text).then((value) {
+                            
+                            context.pushNamed("main");
+                          },);
                         }else{
                           await FirebaseAuth.instance.signOut();
                         }
@@ -108,7 +113,7 @@ class EmailSignInPage extends StatelessWidget{
                         showNotif(context, e.message.toString());
                       }
                     },
-                    child: const Text("Sign In"),
+                    child: Text("Sign In",style: poppinStyleBold),
                     
                   ),
                 )
@@ -122,7 +127,7 @@ class EmailSignInPage extends StatelessWidget{
               }on FirebaseAuthException catch (e){
                 showNotif(context, e.message.toString());
               }
-            }, child: const Text("Reset Password",style: TextStyle(fontWeight: FontWeight.bold,  color: Color.fromARGB(255, 29, 98, 151)), ),),
+            }, child: Text("Reset Password",style: GoogleFonts.poppins(fontWeight: FontWeight.bold,  color: const Color.fromARGB(255, 255, 255, 255), decoration: TextDecoration.underline ),),)
           ],
         )
       ),

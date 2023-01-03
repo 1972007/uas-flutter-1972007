@@ -1,11 +1,4 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:math';
 
-import 'package:dio/dio.dart';
-import 'package:flutter_application_1/entities/genre/genre.dart';
-import 'package:flutter_application_1/entities/movie/movie.dart';
-import 'package:flutter_application_1/entities/movie_detail/movie_detail.dart';
 import 'package:flutter_application_1/entities/tresult/tresult.dart';
 import 'package:flutter_application_1/services/movie_service.dart';
 
@@ -16,7 +9,7 @@ void main(List<String> args) async {
   // var res = await dio.get("https://api.themoviedb.org/3/movie/11?api_key=$_api_key&language=en-US");
   // print(res);
   MovieServices services = MovieServices();
-  TResult? res = await services.movieIdToLinkImg(11);
+  TResult? res = await services.movieIdToLinkImg(111);
   if(res!=null){
     print(res.toString());
   }

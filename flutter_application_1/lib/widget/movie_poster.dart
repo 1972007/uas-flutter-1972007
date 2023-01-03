@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 class MoviePoster extends StatelessWidget{
   String link;
   int id;
-  MoviePoster({super.key, required this.link, required this.id});
+  bool isUpcoming;
+  MoviePoster({super.key, required this.link, required this.id, this.isUpcoming=false});
 
   
   @override
@@ -13,7 +14,10 @@ class MoviePoster extends StatelessWidget{
     // TODO: implement build
     return InkWell(
       onTap: () {
-        context.pushNamed("detail", extra: id);
+        context.pushNamed("detail", queryParams: {
+          "movie_id":id.toString(),
+          "isUpcoming":isUpcoming.toString()
+        });
       },
       child: Container(
         width: 140,
