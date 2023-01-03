@@ -287,7 +287,7 @@ class MovieFoodPage extends StatelessWidget {
                                       .add(map)
                                       .then(
                                     (value) {
-                                      // _firestoreUserDoc.update({"credit" : data["credit"]-map["price"]});
+                                      _firestoreUserDoc.update({"credit" : data["credit"]-map["price"]});
                                       context.goNamed("food_completed",
                                           extra: value.id);
                                     },
